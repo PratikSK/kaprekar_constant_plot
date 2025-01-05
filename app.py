@@ -73,12 +73,17 @@ if user_input.isdigit() and is_valid_kaprekar_input(int(user_input)):
     # Add explanation and GitHub link below the plot
     st.write("""
         ### What is Kaprekar's Constant?
-        Kaprekar's constant, **6174**, is a unique number that all four-digit numbers with at least two distinct digits converge to
-        after repeatedly applying the following process:
-        1. Arrange the digits in descending and ascending order to form two numbers.
-        2. Subtract the smaller number from the larger number.
-        3. Repeat the process with the result until you reach **6174**.
+        Kaprekar's constant, **6174**, is a fascinating mathematical phenomenon. Here's how it works:
+    
+        1. Take any four-digit number with at least two distinct digits.
+        2. Rearrange its digits to form the largest and smallest numbers possible.
+        3. Subtract the smaller number from the larger one.
+        4. Repeat this process with the result.
+    
+        No matter where you start, you’ll always reach **6174** in a few steps—and once you do, it stays constant. 
+        This intriguing number is named after the Indian mathematician D. R. Kaprekar.
     """)
+
     st.markdown("[View the code on GitHub](https://github.com/PratikSK/kaprekar_constant_plot.git)")
 
 else:
