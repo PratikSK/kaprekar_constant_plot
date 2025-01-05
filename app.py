@@ -68,7 +68,7 @@ def create_calculation_table(sequence, intermediates):
             num,
             f"{desc} ({' → '.join(sorted(str(num).zfill(4), reverse=True))})",
             f"{asc} ({' → '.join(sorted(str(num).zfill(4)))})",
-            desc - asc
+            f"{desc - asc} ({desc} - {asc})"
         ])
     # Add final step (6174)
     data.append([
@@ -93,8 +93,17 @@ if user_input.isdigit() and is_valid_kaprekar_input(int(user_input)):
     sequence, intermediates = kaprekar_with_intermediates(start_number)
     st.success(f"Valid input! Plotting Kaprekar sequence for {start_number}.")
     
+    # Display the sequential calculation
+    calculation_sequence = ""
+    for (num, (desc, asc)) in zip(sequence[:-1], intermediates):
+        calculation_sequence += f"{num} ({desc} - {asc} = {desc-asc}) → "
+    calculation_sequence += "6174"
+    
+    st.markdown("### Calculation Sequence")
+    st.write(calculation_sequence)
+    
     # Display the calculation table
-    st.subheader("Calculations")
+    st.subheader("Step-by-Step Calculations")
     calculation_table = create_calculation_table(sequence, intermediates)
     st.table(calculation_table)
     
