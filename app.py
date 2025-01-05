@@ -22,7 +22,7 @@ def is_valid_kaprekar_input(num):
         return False
     return True
 
-# Function to plot Kaprekar sequence
+# Function to plot Kaprekar sequence with enhancements
 def plot_kaprekar_sequence(start_number, sequence, intermediates):
     step_positions = list(range(1, len(sequence) + 1))
     asc_numbers = [asc for _, asc in intermediates + [(6174, 6174)]]
@@ -48,7 +48,8 @@ def plot_kaprekar_sequence(start_number, sequence, intermediates):
     plt.plot(step_positions, asc_numbers, linestyle="dashed", color="orange")
     plt.plot(step_positions, desc_numbers, linestyle="dashed", color="purple")
     plt.fill_between(step_positions, asc_numbers, desc_numbers, color="gray", alpha=0.2, hatch="//")
-    plt.axhline(y=6174, color="red", linestyle="solid", linewidth=1.5)
+    plt.axhline(y=6174, color="red", linestyle="solid", linewidth=1.5, label="Kaprekar Constant: 6174")
+    plt.legend(loc="lower right", fontsize=10)
     plt.title(f"Numbers Converging at Kaprekar's Constant (Start: {start_number})", fontsize=14)
     plt.xlabel("Step Number", fontsize=12)
     plt.ylabel("Number", fontsize=12)
@@ -68,5 +69,16 @@ if user_input.isdigit() and is_valid_kaprekar_input(int(user_input)):
     sequence, intermediates = kaprekar_with_intermediates(start_number)
     st.success(f"Valid input! Plotting Kaprekar sequence for {start_number}.")
     plot_kaprekar_sequence(start_number, sequence, intermediates)
+
+    # Add explanation and GitHub link below the plot
+    st.write("""
+        ### What is Kaprekar's Constant?
+        Kaprekar's constant, **6174**, is a unique number that all four-digit numbers with at least two distinct digits converge to
+        after repeatedly applying the following process:
+        1. Arrange the digits in descending and ascending order to form two numbers.
+        2. Subtract the smaller number from the larger number.
+        3. Repeat the process with the result until you reach **6174**.
+    """)
+    st.markdown("[View the code on GitHub](https://github.com/PratikSK/kaprekar_constant_plot.git)")
 else:
     st.warning("Please enter a valid 4-digit number with at least two distinct digits.")
