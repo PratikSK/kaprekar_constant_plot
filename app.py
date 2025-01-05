@@ -56,29 +56,7 @@ def plot_kaprekar_sequence(start_number, sequence, intermediates):
     plt.grid(True)
     st.pyplot(plt)
 
-# Function to create step-by-step calculation table
-def create_calculation_table(sequence, intermediates):
-    data = []
-    # Add headers
-    data.append(['Step', 'Current Number', 'Descending Arrangement', 'Ascending Arrangement', 'Result'])
-    # Add data rows
-    for step, (num, (desc, asc)) in enumerate(zip(sequence[:-1], intermediates), 1):
-        data.append([
-            step,
-            num,
-            f"{desc} ({' → '.join(sorted(str(num).zfill(4), reverse=True))})",
-            f"{asc} ({' → '.join(sorted(str(num).zfill(4)))})",
-            f"{desc - asc} ({desc} - {asc})"
-        ])
-    # Add final step (6174)
-    data.append([
-        len(sequence),
-        6174,
-        '6174',
-        '6174',
-        '6174 (Kaprekar Constant)'
-    ])
-    return data
+
 
 # Streamlit UI
 st.title("Kaprekar Constant Visualizer")
@@ -101,11 +79,6 @@ if user_input.isdigit() and is_valid_kaprekar_input(int(user_input)):
     
     st.markdown("### Calculation Sequence")
     st.write(calculation_sequence)
-    
-    # Display the calculation table
-    st.subheader("Step-by-Step Calculations")
-    calculation_table = create_calculation_table(sequence, intermediates)
-    st.table(calculation_table)
     
     # Display the plot
     plot_kaprekar_sequence(start_number, sequence, intermediates)
