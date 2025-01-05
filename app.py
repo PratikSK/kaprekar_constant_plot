@@ -50,6 +50,7 @@ def plot_kaprekar_sequence(start_number, sequence, intermediates):
     plt.fill_between(step_positions, asc_numbers, desc_numbers, color="gray", alpha=0.2, hatch="//")
     # plt.axhline(y=6174, color="red", linestyle="solid", linewidth=1.5)
     plt.axhline(y=6174, color="red", linestyle="solid", linewidth=1.5, label="Kaprekar Constant: 6174")
+    plt.legend()
     plt.title(f"Numbers Converging at Kaprekar's Constant (Start: {start_number})", fontsize=14)
     plt.xlabel("Step Number", fontsize=12)
     plt.ylabel("Number", fontsize=12)
