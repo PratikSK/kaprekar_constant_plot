@@ -48,7 +48,6 @@ def plot_kaprekar_sequence(start_number, sequence, intermediates):
     plt.plot(step_positions, asc_numbers, linestyle="dashed", color="orange")
     plt.plot(step_positions, desc_numbers, linestyle="dashed", color="purple")
     plt.fill_between(step_positions, asc_numbers, desc_numbers, color="gray", alpha=0.2, hatch="//")
-    # plt.axhline(y=6174, color="red", linestyle="solid", linewidth=1.5)
     plt.axhline(y=6174, color="red", linestyle="solid", linewidth=1.5, label="Kaprekar Constant: 6174")
     plt.legend()
     plt.title(f"Numbers Converging at Kaprekar's Constant (Start: {start_number})", fontsize=14)
@@ -56,6 +55,30 @@ def plot_kaprekar_sequence(start_number, sequence, intermediates):
     plt.ylabel("Number", fontsize=12)
     plt.grid(True)
     st.pyplot(plt)
+
+# Function to create step-by-step calculation table
+def create_calculation_table(sequence, intermediates):
+    data = []
+    # Add headers
+    data.append(['Step', 'Current Number', 'Descending Arrangement', 'Ascending Arrangement', 'Result'])
+    # Add data rows
+    for step, (num, (desc, asc)) in enumerate(zip(sequence[:-1], intermediates), 1):
+        data.append([
+            step,
+            num,
+            f"{desc} ({' → '.join(sorted(str(num).zfill(4), reverse=True))})",
+            f"{asc} ({' → '.join(sorted(str(num).zfill(4)))})",
+            desc - asc
+        ])
+    # Add final step (6174)
+    data.append([
+        len(sequence),
+        6174,
+        '6174',
+        '6174',
+        '6174 (Kaprekar Constant)'
+    ])
+    return data
 
 # Streamlit UI
 st.title("Kaprekar Constant Visualizer")
@@ -69,6 +92,13 @@ if user_input.isdigit() and is_valid_kaprekar_input(int(user_input)):
     start_number = int(user_input)
     sequence, intermediates = kaprekar_with_intermediates(start_number)
     st.success(f"Valid input! Plotting Kaprekar sequence for {start_number}.")
+    
+    # Display the calculation table
+    st.subheader("Calculations")
+    calculation_table = create_calculation_table(sequence, intermediates)
+    st.table(calculation_table)
+    
+    # Display the plot
     plot_kaprekar_sequence(start_number, sequence, intermediates)
 
     # Add explanation and GitHub link below the plot
@@ -81,7 +111,7 @@ if user_input.isdigit() and is_valid_kaprekar_input(int(user_input)):
         3. Subtract the smaller number from the larger one.
         4. Repeat this process with the result.
     
-        No matter where you start, you’ll always reach **6174** in a few steps—and once you do, it stays constant. 
+        No matter where you start, you'll always reach **6174** in a few steps—and once you do, it stays constant. 
         This intriguing number is named after the Indian mathematician D. R. Kaprekar.
     """)
 
